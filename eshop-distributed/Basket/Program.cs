@@ -1,10 +1,11 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+/* Add services to the container. */
 builder.AddServiceDefaults();
 
 // Instruct basket ms to connect to the redis cache.
 builder.AddRedisDistributedCache("cache");
+builder.Services.AddScoped<BasketService>();
 
 var app = builder.Build();
 
