@@ -23,7 +23,7 @@ public static class BasketEndpoint
             return Results.Created("GetBasket", cart);
         }).WithName("UpdateBasket").Produces(StatusCodes.Status201Created);
 
-        group.MapPut("/{userName}", async (string userName, BasketService service) =>
+        group.MapDelete("/{userName}", async (string userName, BasketService service) =>
         {
             await service.DeleteBasket(userName);
             return Results.NoContent();
