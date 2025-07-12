@@ -10,5 +10,6 @@ var catalogdb = postgres.AddDatabase("catalogdb"); // Gives connectionInfo to th
 
 // Catalog project depends on catalogdb.
 builder.AddProject<Catalog>("catalog").WithReference(catalogdb).WaitFor(catalogdb);
+builder.AddProject<Basket>("basket");
 
 builder.Build().Run();
