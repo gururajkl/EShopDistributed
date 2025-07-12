@@ -3,6 +3,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.AddServiceDefaults();
 
+// Add postgreSql database connection.
+// Register the ProductDbContext with Npgsql and the connection string.
+builder.AddNpgsqlDbContext<ProductDbContext>("catalogdb");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
