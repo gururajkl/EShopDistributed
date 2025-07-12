@@ -7,6 +7,9 @@ builder.AddServiceDefaults();
 // Register the ProductDbContext with Npgsql and the connection string.
 builder.AddNpgsqlDbContext<ProductDbContext>("catalogdb");
 
+// Add the ProductService to the service collection.
+builder.Services.AddScoped<ProductService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
