@@ -16,7 +16,7 @@ public class ProductService(ProductDbContext dbContext)
     /// </summary>
     /// <param name="id">Id of the product.</param>
     /// <returns>Nullable product from the database.</returns>
-    public async Task<Product?> GetProductById(int id)
+    public async Task<Product?> GetProductByIdAsync(int id)
     {
         return await dbContext.Products.FindAsync(id);
     }
@@ -34,16 +34,16 @@ public class ProductService(ProductDbContext dbContext)
     /// <summary>
     /// Updates an existing product in the database.
     /// </summary>
-    /// <param name="updatedProduct">Old product.</param>
+    /// <param name="existingProduct">Old product.</param>
     /// <param name="inputProduct">New product.</param>
-    public async Task UpdateProductAsync(Product updatedProduct, Product inputProduct)
+    public async Task UpdateProductAsync(Product existingProduct, Product inputProduct)
     {
-        updatedProduct.Name = inputProduct.Name;
-        updatedProduct.Description = inputProduct.Description;
-        updatedProduct.ImageUrl = inputProduct.ImageUrl;
-        updatedProduct.Price = inputProduct.Price;
+        existingProduct.Name = inputProduct.Name;
+        existingProduct.Description = inputProduct.Description;
+        existingProduct.ImageUrl = inputProduct.ImageUrl;
+        existingProduct.Price = inputProduct.Price;
 
-        dbContext.Products.Update(updatedProduct);
+        dbContext.Products.Update(existingProduct);
         await dbContext.SaveChangesAsync();
     }
 
