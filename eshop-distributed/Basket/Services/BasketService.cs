@@ -6,15 +6,6 @@ namespace Basket.Services;
 public class BasketService(IDistributedCache cache)
 {
     /// <summary>
-    /// Adds new key-value to the redis.
-    /// </summary>
-    /// <param name="cart">Item to add.</param>
-    public async Task CreateBasket(ShoppingCart cart)
-    {
-        await cache.SetStringAsync(cart.UserName, JsonSerializer.Serialize(cart));
-    }
-
-    /// <summary>
     /// Get basket from the redis cache.
     /// </summary>
     /// <param name="userName">Key to find.</param>
