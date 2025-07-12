@@ -16,7 +16,11 @@ var app = builder.Build();
 app.MapDefaultEndpoints();
 
 // Use the extension method to apply migrations and seed the database.
-if (app.Environment.IsDevelopment())
-    app.UseMigration();
+app.UseMigration();
+
+// Extension class has all endpoints for product CRUD.
+app.MapProductEndpoints();
+
+app.UseHttpsRedirection();
 
 app.Run();
