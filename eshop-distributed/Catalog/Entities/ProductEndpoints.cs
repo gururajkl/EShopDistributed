@@ -57,8 +57,8 @@ public static class ProductEndpoints
 
             await service.DeleteProductAsync(product);
 
-            return Results.NoContent();
-        }).WithName("DeleteProduct").Produces(StatusCodes.Status204NoContent)
+            return Results.Ok();
+        }).WithName("DeleteProduct").Produces(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status404NotFound);
     }
 }
