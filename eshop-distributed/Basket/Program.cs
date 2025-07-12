@@ -9,9 +9,12 @@ builder.Services.AddScoped<BasketService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-
+/* Configure the HTTP request pipeline. */
 app.MapDefaultEndpoints();
+
+// Use extension method to expose basket service endpoints.
+app.MapBasketEndpoints();
+
 app.UseHttpsRedirection();
 
 app.Run();
