@@ -13,6 +13,9 @@ builder.Services.AddHttpClient<CatalogApiClient>(client =>
     client.BaseAddress = new("https+http://catalog");
 });
 
+// Register masstransit extension method here.
+builder.Services.AddMassTransitWithAssemblies(Assembly.GetExecutingAssembly());
+
 var app = builder.Build();
 
 /* Configure the HTTP request pipeline. */

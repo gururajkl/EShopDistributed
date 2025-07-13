@@ -10,6 +10,9 @@ builder.AddNpgsqlDbContext<ProductDbContext>("catalogdb");
 // Add the ProductService to the service collection.
 builder.Services.AddScoped<ProductService>();
 
+// Register masstransit extension method here.
+builder.Services.AddMassTransitWithAssemblies(Assembly.GetExecutingAssembly());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
