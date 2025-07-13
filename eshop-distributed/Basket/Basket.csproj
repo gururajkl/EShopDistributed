@@ -18,8 +18,4 @@
     <ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ApiClients\" />
-  </ItemGroup>
-
 </Project>

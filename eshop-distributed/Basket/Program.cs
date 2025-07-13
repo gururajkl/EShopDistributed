@@ -7,6 +7,12 @@ builder.AddServiceDefaults();
 builder.AddRedisDistributedCache("cache");
 builder.Services.AddScoped<BasketService>();
 
+// Add the API clients that basket service will use.
+builder.Services.AddHttpClient<CatalogApiClient>(client =>
+{
+    client.BaseAddress = new("https+http://catalog");
+});
+
 var app = builder.Build();
 
 /* Configure the HTTP request pipeline. */
