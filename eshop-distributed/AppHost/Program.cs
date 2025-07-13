@@ -22,4 +22,8 @@ var basket = builder.AddProject<Basket>("basket").WithReference(cache).WithRefer
     .WithReference(keycloak)
     .WaitFor(cache).WaitFor(rabbitMq).WaitFor(keycloak);
 
+builder.AddProject<WebApp>("webapp").WithExternalHttpEndpoints()
+    .WithReference(catalog).WithReference(basket)
+    .WaitFor(catalog).WaitFor(basket);
+
 builder.Build().Run();
