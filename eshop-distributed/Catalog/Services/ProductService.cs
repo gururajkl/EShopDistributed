@@ -1,6 +1,9 @@
-﻿namespace Catalog.Services;
+﻿using MassTransit;
+using ServiceDefaults.Messaging.Events;
 
-public class ProductService(ProductDbContext dbContext)
+namespace Catalog.Services;
+
+public class ProductService(ProductDbContext dbContext, IBus bus)
 {
     /// <summary>
     /// Gets all products from the database.
@@ -38,6 +41,23 @@ public class ProductService(ProductDbContext dbContext)
     /// <param name="inputProduct">New product.</param>
     public async Task UpdateProductAsync(Product existingProduct, Product inputProduct)
     {
+        // If price has changed, publish an integration event.
+        if (existingProduct.Price != inputProduct.Price)
+        {
+            // Set updated price info here.
+            var integrationEvent = new ProductPriceChangedIntegrationEvent
+            {
+                ProductId = existingProduct.Id,
+                Name = inputProduct.Name,
+                Description = inputProduct.Description,
+                Price = inputProduct.Price,
+                ImageUrl = inputProduct.ImageUrl
+            };
+
+            // Publish the integration event to the message bus.
+            await bus.Publish(integrationEvent);
+        }
+
         existingProduct.Name = inputProduct.Name;
         existingProduct.Description = inputProduct.Description;
         existingProduct.ImageUrl = inputProduct.ImageUrl;
