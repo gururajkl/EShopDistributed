@@ -11,9 +11,12 @@ var catalogdb = postgres.AddDatabase("catalogdb"); // Gives connectionInfo to th
 // Redis as backing service and using this in basket ms.
 var cache = builder.AddRedis("cache").WithRedisInsight().WithDataVolume().WithLifetime(ContainerLifetime.Persistent);
 
+var rabbitMq = builder.AddRabbitMQ("rabbitmq").WithManagementPlugin().WithDataVolume().WithLifetime(ContainerLifetime.Persistent);
+
 // Projects and their references.
-var catalog = builder.AddProject<Catalog>("catalog").WithReference(catalogdb).WaitFor(catalogdb);
-var basket = builder.AddProject<Basket>("basket").WithReference(cache).WithReference(catalog)
-    .WaitFor(cache);
+var catalog = builder.AddProject<Catalog>("catalog").WithReference(catalogdb).WithReference(rabbitMq)
+    .WaitFor(catalogdb).WaitFor(rabbitMq);
+var basket = builder.AddProject<Basket>("basket").WithReference(cache).WithReference(catalog).WithReference(rabbitMq)
+    .WaitFor(cache).WaitFor(rabbitMq);
 
 builder.Build().Run();
