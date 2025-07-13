@@ -12,7 +12,8 @@ var catalogdb = postgres.AddDatabase("catalogdb"); // Gives connectionInfo to th
 var cache = builder.AddRedis("cache").WithRedisInsight().WithDataVolume().WithLifetime(ContainerLifetime.Persistent);
 
 // Projects and their references.
-builder.AddProject<Catalog>("catalog").WithReference(catalogdb).WaitFor(catalogdb);
-builder.AddProject<Basket>("basket").WithReference(cache).WaitFor(cache);
+var catalog = builder.AddProject<Catalog>("catalog").WithReference(catalogdb).WaitFor(catalogdb);
+var basket = builder.AddProject<Basket>("basket").WithReference(cache).WithReference(catalog)
+    .WaitFor(cache);
 
 builder.Build().Run();
