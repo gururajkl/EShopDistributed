@@ -45,4 +45,21 @@ public class BasketService(IDistributedCache cache, CatalogApiClient catalogApiC
     {
         await cache.RemoveAsync(userName);
     }
+
+    /// <summary>
+    /// Update the price of a product in the basket.
+    /// </summary>
+    /// <param name="productId">Product id to update in the redis.</param>
+    /// <param name="price">New price for the product.</param>
+    public async Task UpdateBasketItemProductPrice(int productId, decimal price)
+    {
+        ShoppingCart? basket = await GetBasket("guru");
+        var item = basket!.Items.FirstOrDefault(b => b.ProductId == productId);
+
+        if (item is not null)
+        {
+            item.Price = price;
+            await cache.SetStringAsync(basket.UserName, JsonSerializer.Serialize(basket));
+        }
+    }
 }

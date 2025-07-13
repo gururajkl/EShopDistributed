@@ -27,8 +27,19 @@ Content-Type: application/json
 {
   "name": "Shampoo",
   "description": "Updated Smooth one",
-  "price": 59.99,
+  "price": 505,
   "imageUrl": "product10.png"
+}
+
+###
+
+PUT {{Catalog_HostAddress}}/1
+Content-Type: application/json
+{
+  "name": "Solar Powered Flashlight",
+  "description": "A fantastic product for outdoor enthusiasts",
+  "price": 505,
+  "imageUrl": "product1.png"
 }
 
 ###
