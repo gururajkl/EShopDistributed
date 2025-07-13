@@ -15,14 +15,14 @@ Content-Type: application/json
         "Color": "Red",
         "Price": 0,
         "ProductId": 1,
-        "ProductName": "Solar Powered Flashlight"
+        "ProductName": ""
       },
       {
         "Quantity": 1,
         "Color": "Blue",
         "Price": 0,
         "ProductId": 2,
-        "ProductName": "Hiking Poles"
+        "ProductName": ""
       }
     ]
 }

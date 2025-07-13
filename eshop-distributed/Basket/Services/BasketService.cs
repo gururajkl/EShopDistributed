@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Basket.Services;
 
-public class BasketService(IDistributedCache cache)
+public class BasketService(IDistributedCache cache, CatalogApiClient catalogApiClient)
 {
     /// <summary>
     /// Get basket from the redis cache.
@@ -22,6 +22,18 @@ public class BasketService(IDistributedCache cache)
     /// <param name="cart">Item to update.</param>
     public async Task UpdateBasket(ShoppingCart cart)
     {
+        // Before updating the basket, we can enrich it with product details,
+        // By calling the catalog service using catalogApiClient.
+        foreach (var cartItem in cart.Items)
+        {
+            var product = await catalogApiClient.GetProductByIdAsync(cartItem.ProductId);
+            if (product is not null)
+            {
+                cartItem.ProductName = product.Name;
+                cartItem.Price = product.Price;
+            }
+        }
+
         await cache.SetStringAsync(cart.UserName, JsonSerializer.Serialize(cart));
     }
 
