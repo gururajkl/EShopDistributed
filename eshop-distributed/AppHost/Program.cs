@@ -13,10 +13,13 @@ var cache = builder.AddRedis("cache").WithRedisInsight().WithDataVolume().WithLi
 
 var rabbitMq = builder.AddRabbitMQ("rabbitmq").WithManagementPlugin().WithDataVolume().WithLifetime(ContainerLifetime.Persistent);
 
+var keycloak = builder.AddKeycloak("keycloak", 8080).WithDataVolume().WithLifetime(ContainerLifetime.Persistent);
+
 // Projects and their references.
 var catalog = builder.AddProject<Catalog>("catalog").WithReference(catalogdb).WithReference(rabbitMq)
     .WaitFor(catalogdb).WaitFor(rabbitMq);
 var basket = builder.AddProject<Basket>("basket").WithReference(cache).WithReference(catalog).WithReference(rabbitMq)
-    .WaitFor(cache).WaitFor(rabbitMq);
+    .WithReference(keycloak)
+    .WaitFor(cache).WaitFor(rabbitMq).WaitFor(keycloak);
 
 builder.Build().Run();

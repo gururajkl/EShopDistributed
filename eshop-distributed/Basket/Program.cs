@@ -16,6 +16,15 @@ builder.Services.AddHttpClient<CatalogApiClient>(client =>
 // Register masstransit extension method here.
 builder.Services.AddMassTransitWithAssemblies(Assembly.GetExecutingAssembly());
 
+// Configure authentication, auth and keycloak.
+builder.Services.AddAuthentication().AddKeycloakJwtBearer("keycloak", "eshop", configOptions =>
+{
+    configOptions.RequireHttpsMetadata = false;
+    configOptions.Audience = "account";
+});
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 /* Configure the HTTP request pipeline. */
@@ -23,6 +32,9 @@ app.MapDefaultEndpoints();
 
 // Use extension method to expose basket service endpoints.
 app.MapBasketEndpoints();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseHttpsRedirection();
 
