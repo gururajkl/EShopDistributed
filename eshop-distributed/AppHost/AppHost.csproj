@@ -19,6 +19,7 @@
     <PackageReference Include="Aspire.Hosting.RabbitMQ" Version="9.3.1" />
     <!-- Need this for Basket project -->
     <PackageReference Include="Aspire.Hosting.Redis" Version="9.3.1" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.Ollama" Version="9.6.0" />
   </ItemGroup>
 
   <ItemGroup>
